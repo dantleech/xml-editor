@@ -1,0 +1,34 @@
+{
+    "minimum-stability": "dev",
+    "name": "phpactor/xml-editor",
+    "description": "API for editing code",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Leech",
+            "email": "daniel@dantleech.com"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "^7.2@dev",
+        "microsoft/tolerant-php-parser": "dev-master",
+        "phpactor/test-utils": "^1.0@dev"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Phpactor\\XmlEditor\\": "lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Phpactor\\XmlEditor\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
