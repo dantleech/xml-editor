@@ -15,6 +15,7 @@
         "phpactor/test-utils": "^1.0@dev"
     },
     "require-dev": {
+        "infection/infection": "dev-master"
     },
     "autoload": {
         "psr-4": {
