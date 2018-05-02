@@ -5,6 +5,8 @@ namespace Phpactor\XmlEditor\Core;
 use Countable;
 use DOMNode;
 use DOMNodeList;
+use Phpactor\XmlEditor\Core\Exception\IndexOutOfRange;
+use Phpactor\XmlEditor\Core\Exception\RequiresAtLeastOneNode;
 
 final class NodeList implements NodeLike, Countable
 {
@@ -30,14 +32,33 @@ final class NodeList implements NodeLike, Countable
         foreach ($this->nodes as $node) {
             return $node;
         }
+
+        throw new RequiresAtLeastOneNode(
+            'Node list "%s" is empty, cannot retrieve the first'
+        );
     }
 
     public function last(): Node
     {
+        if (count($this->nodes) === 0) {
+            throw new RequiresAtLeastOneNode(
+                'Node list "%s" is empty, cannot retrieve the first'
+            );
+        }
+
+        return end($this->nodes);
     }
 
     public function child(int $index): Node
     {
+        if (isset($this->nodes[$index])) {
+            return $this->nodes[$index];
+        }
+
+        throw new IndexOutOfRange(sprintf(
+            'Index "%s" does not exist, valid indexes: "%s"',
+            $index, implode('", "', array_keys($this->nodes))
+        ));
     }
 
     /**

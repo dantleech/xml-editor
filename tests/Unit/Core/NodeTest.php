@@ -5,7 +5,7 @@ namespace Phpactor\XmlEditor\Tests\Unit\Core;
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
 use Phpactor\XmlEditor\Core\Exception\NodeHasNoParent;
-use Phpactor\XmlEditor\Core\Extension\CannotReplaceRoot;
+use Phpactor\XmlEditor\Core\Exception\CannotReplaceRoot;
 use Phpactor\XmlEditor\Core\Node;
 use RuntimeException;
 

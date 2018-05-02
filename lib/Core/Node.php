@@ -7,7 +7,7 @@ use DOMElement;
 use DOMNode;
 use DOMXPath;
 use Phpactor\XmlEditor\Core\Exception\NodeHasNoParent;
-use Phpactor\XmlEditor\Core\Extension\CannotReplaceRoot;
+use Phpactor\XmlEditor\Core\Exception\CannotReplaceRoot;
 use RuntimeException;
 
 class Node implements NodeLike
