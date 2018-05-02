@@ -208,4 +208,11 @@ EOT
 EOT
 , $node->dump(true));
     }
+
+    public function testEvaluatesExpression()
+    {
+        $node = Node::fromXmlFirstChild('<foobar foo="bar"/>');
+        $this->assertTrue($node->evaluate('./@foo="bar"'));
+        $this->assertFalse($node->evaluate('./@foo="foo"'));
+    }
 }

@@ -64,7 +64,7 @@ class Node implements NodeLike
 
     public function find(string $xpathQuery): NodeList
     {
-        $xpath = new DOMXPath($this->root()->node);
+        $xpath = $this->xpath();
 
         return NodeList::fromDOMNodeList($xpath->query($xpathQuery, $this->node));
     }
@@ -221,10 +221,21 @@ class Node implements NodeLike
         return NodeList::fromDOMNodeList($this->node->childNodes);
     }
 
+    public function evaluate(string $expression)
+    {
+        return $this->xpath()->evaluate($expression, $this->node);
+    }
+
     private function importUnknown($node)
     {
         $node = Node::fromUnknown($node);
         $newNode = $this->node->ownerDocument->importNode($node->node);
         return $newNode;
+    }
+
+    private function xpath(): DOMXPath
+    {
+        $xpath = new DOMXPath($this->root()->node);
+        return $xpath;
     }
 }
