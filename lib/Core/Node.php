@@ -5,6 +5,7 @@ namespace Phpactor\XmlEditor\Core;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
+use DOMNodeList;
 use DOMXPath;
 use Phpactor\XmlEditor\Core\Exception\NodeHasNoParent;
 use Phpactor\XmlEditor\Core\Exception\CannotReplaceRoot;
@@ -224,6 +225,11 @@ class Node implements NodeLike
     public function evaluate(string $expression)
     {
         return $this->xpath()->evaluate($expression, $this->node);
+    }
+
+    public function attachTo(DOMDocument $document)
+    {
+        return $document->importNode($this->node);
     }
 
     private function importUnknown($node)

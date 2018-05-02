@@ -2,13 +2,16 @@
 
 namespace Phpactor\XmlEditor\Core;
 
+use ArrayIterator;
 use Countable;
+use DOMDocument;
 use DOMNode;
 use DOMNodeList;
+use IteratorAggregate;
 use Phpactor\XmlEditor\Core\Exception\IndexOutOfRange;
 use Phpactor\XmlEditor\Core\Exception\RequiresAtLeastOneNode;
 
-final class NodeList implements NodeLike, Countable
+final class NodeList implements NodeLike, Countable, IteratorAggregate
 {
     /**
      * @var Node[]
@@ -65,64 +68,12 @@ final class NodeList implements NodeLike, Countable
      * @param string $selector XPath selector
      * @param mixed $value Value
      */
-    public function equals(string $selector, $value): NodeList
+    public function filter(string $expression): NodeList
     {
-    }
+        return new self(array_filter($this->nodes, function (Node $node) use ($expression) {
+            return $node->evaluate($expression);
 
-    /**
-     * @param string $selector XPath selector
-     * @param mixed $value Value
-     */
-    public function greaterThan(string $selector, $value): NodeList
-    {
-    }
-
-    /**
-     * @param string $selector XPath selector
-     * @param mixed $value Value
-     */
-    public function greaterThanOrEqual(string $selector, $value): NodeList
-    {
-    }
-
-    /**
-     * @param string $selector XPath selector
-     * @param mixed $value Value
-     */
-    public function lessThan(string $selector, $value): NodeList
-    {
-    }
-
-    /**
-     * @param string $selector XPath selector
-     * @param mixed $value Value
-     */
-    public function lessThanOrEqual(string $selector, $value): NodeList
-    {
-    }
-
-    /**
-     * @param string $selector XPath selector
-     * @param mixed $value Value
-     */
-    public function startsWith(string $selector, $value): NodeList
-    {
-    }
-
-    /**
-     * @param string $selector XPath selector
-     * @param mixed $value Value
-     */
-    public function endsWith(string $selector, $value): NodeList
-    {
-    }
-
-    /**
-     * @param string $selector XPath selector
-     * @param mixed $value Value
-     */
-    public function containing(string $selector, $value): NodeList
-    {
+        }));
     }
 
     /**
@@ -130,6 +81,10 @@ final class NodeList implements NodeLike, Countable
      */
     public function after($node): NodeLike
     {
+        $newNode = Node::fromUnknown($node);
+        return $this->apply(function (Node $node) use ($newNode) {
+            $node->after($newNode);
+        });
     }
 
     /**
@@ -137,6 +92,10 @@ final class NodeList implements NodeLike, Countable
      */
     public function before($node): NodeLike
     {
+        $newNode = Node::fromUnknown($node);
+        return $this->apply(function (Node $node) use ($newNode) {
+            $node->before($newNode);
+        });
     }
 
     /**
@@ -144,6 +103,10 @@ final class NodeList implements NodeLike, Countable
      */
     public function append($node): NodeLike
     {
+        $newNode = Node::fromUnknown($node);
+        return $this->apply(function (Node $node) use ($newNode) {
+            $node->append($newNode);
+        });
     }
 
     /**
@@ -151,13 +114,27 @@ final class NodeList implements NodeLike, Countable
      */
     public function prepend($node): NodeLike
     {
+        $newNode = Node::fromUnknown($node);
+        return $this->apply(function (Node $node) use ($newNode) {
+            $node->prepend($newNode);
+        });
+    }
+
+    public function apply(callable $callable): NodeList
+    {
+        foreach ($this->nodes as $node) {
+            $callable($node);
+        }
+
+        return $this;
     }
 
     public function find(string $xpathQuery): NodeList
     {
         $nodes = [];
         foreach ($this->nodes as $node) {
-            foreach ($node->select($xpathQuery) as $newNode) {
+            foreach ($node->find($xpathQuery) as $newNode) {
+                assert($newNode instanceof Node);
                 $nodes[] = $newNode;
             }
         }
@@ -165,23 +142,14 @@ final class NodeList implements NodeLike, Countable
         return new self($nodes);
     }
 
-    public function nodeValue()
-    {
-        $values = [];
-        foreach ($this->nodes as $node) {
-            $values[] = $node->nodeValue();
-        }
-
-        return implode('', $values);
-    }
-
     /**
      * @return NodeList
      */
-    public function replace($node): NodeLike
+    public function replace($newNode): NodeLike
     {
+        $newNode = Node::fromUnknown($newNode);
         foreach ($this->nodes as &$node) {
-            $node = $node->replace($node);
+            $node->replace($newNode);
         }
 
         return $this;
@@ -195,10 +163,6 @@ final class NodeList implements NodeLike, Countable
     public function count()
     {
         return count($this->nodes);
-    }
-
-    public function parents(): NodeList
-    {
     }
 
     public function remove(): void
@@ -221,16 +185,40 @@ final class NodeList implements NodeLike, Countable
 
     public function clear(): NodeLike
     {
-    }
+        $this->apply(function (Node $node) {
+            $node->clear();
+        });
 
-    public function __toString()
-    {
-        return implode(PHP_EOL, array_map(function (Node $node) {
-            return $node->__toString();
-        }, $this->nodes));
+        return $this;
     }
 
     public function children(): NodeList
     {
+        $children = [];
+        foreach ($this->nodes as $node) {
+            foreach ($node->children() as $child) {
+                $children[] = $child;
+            }
+        }
+
+        return new self($children);
+    }
+
+    public function dump(): string
+    {
+        $document = new \DOMDocument('1.0');
+        foreach ($this->nodes as $node) {
+            $node = $node->attachTo($document);
+            $document->appendChild($node);
+        }
+        return $document->saveXML();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->nodes);
     }
 }
