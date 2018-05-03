@@ -52,7 +52,6 @@ class NodeListTest extends TestCase
         $node = $list->child(3);
     }
 
-
     /**
      * @dataProvider provideFiltersNodesMatchingExpression
      */
