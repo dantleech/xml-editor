@@ -49,6 +49,14 @@ class NodeTest extends TestCase
         $this->assertEquals('Foobar', $nodes->find('//product')->text());
     }
 
+    public function testReplaceText()
+    {
+        $node = Node::fromXml('<product>Hello</product>')->children()->first();
+        $nodes = $node->replaceText('Foobar');
+
+        $this->assertContains('<product>Foobar</product>', $nodes->find('//product')->dump());
+    }
+
     public function testThrowsExceptionIfTryingToReplaceDocument()
     {
         $this->expectException(CannotReplaceRoot::class);
