@@ -1,12 +1,12 @@
 <?php
 
-namespace Phpactor\XmlEditor\Tests\Unit;
+namespace Phpactor\XmlQuery\Tests\Unit;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use Phpactor\XmlEditor\Exception\NodeHasNoParent;
-use Phpactor\XmlEditor\Exception\CannotReplaceRoot;
-use Phpactor\XmlEditor\Node;
+use Phpactor\XmlQuery\Exception\NodeHasNoParent;
+use Phpactor\XmlQuery\Exception\CannotReplaceRoot;
+use Phpactor\XmlQuery\Node;
 use RuntimeException;
 
 class NodeTest extends TestCase

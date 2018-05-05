@@ -1,12 +1,12 @@
 <?php
 
-namespace Phpactor\XmlEditor\Tests\Unit;
+namespace Phpactor\XmlQuery\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\XmlEditor\Exception\IndexOutOfRange;
-use Phpactor\XmlEditor\Exception\RequiresAtLeastOneNode;
-use Phpactor\XmlEditor\Node;
-use Phpactor\XmlEditor\NodeList;
+use Phpactor\XmlQuery\Exception\IndexOutOfRange;
+use Phpactor\XmlQuery\Exception\RequiresAtLeastOneNode;
+use Phpactor\XmlQuery\Node;
+use Phpactor\XmlQuery\NodeList;
 
 class NodeListTest extends TestCase
 {

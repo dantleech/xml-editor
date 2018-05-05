@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\XmlEditor\Exception;
+namespace Phpactor\XmlQuery\Exception;
 
 use Exception;
 

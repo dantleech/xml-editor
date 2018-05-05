@@ -1,7 +1,7 @@
 {
     "minimum-stability": "dev",
-    "name": "phpactor/xml-editor",
-    "description": "API for editing code",
+    "name": "phpactor/xml-query",
+    "description": "jQuery-like API for editing XML documents",
     "license": "MIT",
     "authors": [
         {
@@ -20,12 +20,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Phpactor\\XmlEditor\\": "lib/"
+            "Phpactor\\XmlQuery\\": "lib/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Phpactor\\XmlEditor\\Tests\\": "tests/"
+            "Phpactor\\XmlQuery\\Tests\\": "tests/"
         }
     },
     "extra": {

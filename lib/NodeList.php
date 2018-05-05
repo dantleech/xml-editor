@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\XmlEditor;
+namespace Phpactor\XmlQuery;
 
 use ArrayIterator;
 use Countable;
@@ -8,11 +8,11 @@ use DOMDocument;
 use DOMNode;
 use DOMNodeList;
 use IteratorAggregate;
-use Phpactor\XmlEditor\Exception\IndexOutOfRange;
-use Phpactor\XmlEditor\Exception\RequiresAtLeastOneNode;
-use Phpactor\XmlEditor\Node;
-use Phpactor\XmlEditor\NodeLike;
-use Phpactor\XmlEditor\NodeList;
+use Phpactor\XmlQuery\Exception\IndexOutOfRange;
+use Phpactor\XmlQuery\Exception\RequiresAtLeastOneNode;
+use Phpactor\XmlQuery\Node;
+use Phpactor\XmlQuery\NodeLike;
+use Phpactor\XmlQuery\NodeList;
 
 final class NodeList implements NodeLike, Countable, IteratorAggregate
 {

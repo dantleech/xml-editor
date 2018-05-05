@@ -7,7 +7,7 @@
     >
 
     <testsuites>
-        <testsuite name="XML Code Editor">
+        <testsuite name="XML Query">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>

@@ -1,11 +1,11 @@
 <?php
 
-namespace Phpactor\XmlEditor;
+namespace Phpactor\XmlQuery;
 
-use Phpactor\XmlEditor\NodeList;
-use Phpactor\XmlEditor\Node;
+use Phpactor\XmlQuery\NodeList;
+use Phpactor\XmlQuery\Node;
 use DOMElement;
-use Phpactor\XmlEditor\NodeLike;
+use Phpactor\XmlQuery\NodeLike;
 
 interface NodeLike
 {

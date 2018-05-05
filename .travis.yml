@@ -14,4 +14,4 @@ before_script:
 script:
   - ./vendor/bin/phpunit
   - ./vendor/bin/phpstan analyse lib --level=7
-  - ./vendor/bin/infection -min-msi=100
+  - ./vendor/bin/infection --min-msi=100

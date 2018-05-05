@@ -1,16 +1,16 @@
 <?php
 
-namespace Phpactor\XmlEditor;
+namespace Phpactor\XmlQuery;
 
 use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DOMNodeList;
 use DOMXPath;
-use Phpactor\XmlEditor\Exception\NodeHasNoParent;
-use Phpactor\XmlEditor\Exception\CannotReplaceRoot;
+use Phpactor\XmlQuery\Exception\NodeHasNoParent;
+use Phpactor\XmlQuery\Exception\CannotReplaceRoot;
 use RuntimeException;
-use Phpactor\XmlEditor\Node;
+use Phpactor\XmlQuery\Node;
 
 class Node implements NodeLike
 {
