@@ -121,6 +121,13 @@ class Node implements NodeLike
         return $this;
     }
 
+    public function replaceText(string $string): NodeLike
+    {
+        $this->node->nodeValue = $string;
+
+        return $this;
+    }
+
     public function dump($pretty = false): string
     {
         if (!$this->node instanceof DOMDocument) {
