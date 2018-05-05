@@ -1,10 +1,11 @@
 <?php
 
-namespace Phpactor\XmlEditor\Core;
+namespace Phpactor\XmlEditor;
 
-use Phpactor\XmlEditor\Core\NodeList;
-use Phpactor\XmlEditor\Core\Node;
+use Phpactor\XmlEditor\NodeList;
+use Phpactor\XmlEditor\Node;
 use DOMElement;
+use Phpactor\XmlEditor\NodeLike;
 
 interface NodeLike
 {
@@ -12,33 +13,30 @@ interface NodeLike
 
     public function remove(): void;
 
-    /**
-     * @return mixed
-     */
     public function text(): string;
 
     /**
-     * @param Node|string
+     * @param Node|string $node
      */
     public function replace($node): NodeLike;
 
     /**
-     * @param Node|string
+     * @param Node|string $node
      */
     public function before($node): NodeLike;
 
     /**
-     * @param Node|string
+     * @param Node|string $node
      */
     public function after($node): NodeLike;
 
     /**
-     * @param Node|string
+     * @param Node|string $node
      */
     public function append($node): NodeLike;
 
     /**
-     * @param Node|string
+     * @param Node|string $node
      */
     public function prepend($node): NodeLike;
 

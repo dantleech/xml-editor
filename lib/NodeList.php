@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\XmlEditor\Core;
+namespace Phpactor\XmlEditor;
 
 use ArrayIterator;
 use Countable;
@@ -8,8 +8,11 @@ use DOMDocument;
 use DOMNode;
 use DOMNodeList;
 use IteratorAggregate;
-use Phpactor\XmlEditor\Core\Exception\IndexOutOfRange;
-use Phpactor\XmlEditor\Core\Exception\RequiresAtLeastOneNode;
+use Phpactor\XmlEditor\Exception\IndexOutOfRange;
+use Phpactor\XmlEditor\Exception\RequiresAtLeastOneNode;
+use Phpactor\XmlEditor\Node;
+use Phpactor\XmlEditor\NodeLike;
+use Phpactor\XmlEditor\NodeList;
 
 final class NodeList implements NodeLike, Countable, IteratorAggregate
 {
@@ -23,7 +26,7 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
         $this->nodes = $nodes;
     }
 
-    public static function fromDOMNodeList(DOMNodeList $nodeList)
+    public static function fromDOMNodeList(DOMNodeList $nodeList): NodeList
     {
         return new self(array_map(function (DOMNode $node) {
             return Node::fromDOMNode($node);
@@ -65,8 +68,7 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
     }
 
     /**
-     * @param string $selector XPath selector
-     * @param mixed $value Value
+     * @param string $expression
      */
     public function filter(string $expression): NodeList
     {

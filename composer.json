@@ -12,7 +12,8 @@
     "require": {
         "phpunit/phpunit": "^7.2@dev",
         "microsoft/tolerant-php-parser": "dev-master",
-        "phpactor/test-utils": "^1.0@dev"
+        "phpactor/test-utils": "^1.0@dev",
+        "phpstan/phpstan-shim": "^0.9.0@dev"
     },
     "require-dev": {
         "infection/infection": "dev-master"

@@ -1,15 +1,16 @@
 <?php
 
-namespace Phpactor\XmlEditor\Core;
+namespace Phpactor\XmlEditor;
 
 use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DOMNodeList;
 use DOMXPath;
-use Phpactor\XmlEditor\Core\Exception\NodeHasNoParent;
-use Phpactor\XmlEditor\Core\Exception\CannotReplaceRoot;
+use Phpactor\XmlEditor\Exception\NodeHasNoParent;
+use Phpactor\XmlEditor\Exception\CannotReplaceRoot;
 use RuntimeException;
+use Phpactor\XmlEditor\Node;
 
 class Node implements NodeLike
 {
@@ -50,7 +51,7 @@ class Node implements NodeLike
         }
 
         if (is_scalar($node)) {
-            return Node::fromXMLFirstChild($node);
+            return Node::fromXmlFirstChild($node);
         }
 
         if ($node instanceof DOMNode) {
@@ -59,7 +60,7 @@ class Node implements NodeLike
 
         throw new RuntimeException(sprintf(
             'Node argument must be either a Node, an XML string or a DOMNode, got "%s"',
-            is_object($node) ? get_class($node) : gettype($object)
+            is_object($node) ? get_class($node) : gettype($node)
         ));
     }
 
@@ -113,7 +114,7 @@ class Node implements NodeLike
             );
         }
 
-        $newNode = $this->root()->node->importNode($node->node, true);
+        $newNode = $this->documentNode()->importNode($node->node, true);
         $this->node->parentNode->replaceChild($newNode, $this->node);
         $this->node = $newNode;
 
@@ -214,7 +215,7 @@ class Node implements NodeLike
             return $this;
         }
 
-        return new Node($this->node->ownerDocument);
+        return new Node($this->documentNode());
     }
 
     public function children(): NodeList
@@ -229,19 +230,28 @@ class Node implements NodeLike
 
     public function attachTo(DOMDocument $document)
     {
-        return $document->importNode($this->node);
+        return $document->importNode($this->node, true);
     }
 
     private function importUnknown($node)
     {
         $node = Node::fromUnknown($node);
-        $newNode = $this->node->ownerDocument->importNode($node->node);
+        $newNode = $this->documentNode()->importNode($node->node, true);
         return $newNode;
     }
 
     private function xpath(): DOMXPath
     {
-        $xpath = new DOMXPath($this->root()->node);
+        $xpath = new DOMXPath($this->documentNode());
         return $xpath;
+    }
+
+    private function documentNode(): DOMDocument
+    {
+        if ($this->node instanceof DOMDocument) {
+            return $this->node;
+        }
+
+        return $this->node->ownerDocument;
     }
 }

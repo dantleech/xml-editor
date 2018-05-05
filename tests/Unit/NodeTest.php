@@ -1,12 +1,12 @@
 <?php
 
-namespace Phpactor\XmlEditor\Tests\Unit\Core;
+namespace Phpactor\XmlEditor\Tests\Unit;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
-use Phpactor\XmlEditor\Core\Exception\NodeHasNoParent;
-use Phpactor\XmlEditor\Core\Exception\CannotReplaceRoot;
-use Phpactor\XmlEditor\Core\Node;
+use Phpactor\XmlEditor\Exception\NodeHasNoParent;
+use Phpactor\XmlEditor\Exception\CannotReplaceRoot;
+use Phpactor\XmlEditor\Node;
 use RuntimeException;
 
 class NodeTest extends TestCase
@@ -103,7 +103,7 @@ class NodeTest extends TestCase
         $node = $node->before('<barbar>foo</barbar>');
         $this->assertEquals(<<<'EOT'
 <?xml version="1.0"?>
-<barbar/>
+<barbar>foo</barbar>
 <foobar>Hello</foobar>
 
 EOT
@@ -117,7 +117,7 @@ EOT
         $this->assertEquals(<<<'EOT'
 <?xml version="1.0"?>
 <foobar>Hello</foobar>
-<barbar/>
+<barbar>foo</barbar>
 
 EOT
         , $node->root()->dump());
@@ -129,7 +129,7 @@ EOT
         $node = $node->append('<barbar>foo</barbar>');
         $this->assertEquals(<<<'EOT'
 <?xml version="1.0"?>
-<foobar><barfoo/><barbar/></foobar>
+<foobar><barfoo/><barbar>foo</barbar></foobar>
 
 EOT
         , $node->root()->dump());
@@ -141,7 +141,7 @@ EOT
         $node = $node->prepend('<barbar>foo</barbar>');
         $this->assertEquals(<<<'EOT'
 <?xml version="1.0"?>
-<foobar><barbar/><barfoo/></foobar>
+<foobar><barbar>foo</barbar><barfoo/></foobar>
 
 EOT
         , $node->root()->dump());
@@ -153,7 +153,7 @@ EOT
         $node = $node->prepend('<barbar>foo</barbar>');
         $this->assertEquals(<<<'EOT'
 <?xml version="1.0"?>
-<foobar><barbar/></foobar>
+<foobar><barbar>foo</barbar></foobar>
 
 EOT
         , $node->root()->dump());
