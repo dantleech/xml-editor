@@ -7,6 +7,7 @@ use DOMElement;
 use DOMNode;
 use DOMNodeList;
 use DOMXPath;
+use Phpactor\XmlQuery\Exception\InvalidNodeType;
 use Phpactor\XmlQuery\Exception\NodeHasNoParent;
 use Phpactor\XmlQuery\Exception\CannotReplaceRoot;
 use RuntimeException;
@@ -183,7 +184,7 @@ class Node implements NodeLike
         $newNode = $this->importUnknown($node);
         $this->node->appendChild($newNode);
 
-        return $this;
+        return new self($newNode);
     }
 
     /**
@@ -260,5 +261,14 @@ class Node implements NodeLike
         }
 
         return $this->node->ownerDocument;
+    }
+
+    public function attributes(): Attributes
+    {
+        if (!$this->node instanceof DOMElement) {
+            throw new InvalidNodeType('Cannot set attribute on on a ' . get_class($this->node));
+        }
+
+        return new Attributes($this->node);
     }
 }

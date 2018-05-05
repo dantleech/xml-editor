@@ -4,6 +4,7 @@ namespace Phpactor\XmlQuery\Tests\Unit;
 
 use DOMDocument;
 use PHPUnit\Framework\TestCase;
+use Phpactor\XmlQuery\Exception\InvalidNodeType;
 use Phpactor\XmlQuery\Exception\NodeHasNoParent;
 use Phpactor\XmlQuery\Exception\CannotReplaceRoot;
 use Phpactor\XmlQuery\Node;
@@ -222,5 +223,19 @@ EOT
         $node = Node::fromXmlFirstChild('<foobar foo="bar"/>');
         $this->assertTrue($node->evaluate('./@foo="bar"'));
         $this->assertFalse($node->evaluate('./@foo="foo"'));
+    }
+
+    public function testReturnsAttributes()
+    {
+        $node = Node::fromXmlFirstChild('<foobar foobar="bar"/>');
+        $attributes = $node->attributes();
+        $this->assertEquals('bar', $attributes->get('foobar'));
+    }
+
+    public function testThrowsExceptionWhenGettingAttributesOnInvalidNode()
+    {
+        $this->expectException(InvalidNodeType::class);
+        $node = Node::fromXmlFirstChild('<foobar foobar="bar"/>');
+        $node->root()->attributes();
     }
 }
