@@ -45,9 +45,10 @@ class NodeTest extends TestCase
     public function testReplace()
     {
         $node = Node::fromXml('<product>Hello</product>')->children()->first();
-        $nodes = $node->replace('<product>Foobar</product>');
+        $node = $node->replace('<product>Foobar</product>');
 
-        $this->assertEquals('Foobar', $nodes->find('//product')->text());
+        $this->assertEquals('Foobar', $node->find('//product')->text());
+        $this->assertEquals('product', $node->name());
     }
 
     public function testReplaceText()
@@ -117,6 +118,7 @@ class NodeTest extends TestCase
 
 EOT
         , $node->root()->dump());
+        $this->assertEquals('barbar', $node->name());
     }
 
     public function testInsertsNodeAfter()
@@ -130,6 +132,7 @@ EOT
 
 EOT
         , $node->root()->dump());
+        $this->assertEquals('barbar', $node->name());
     }
 
     public function testAppendsNodeAsLastChild()
@@ -142,6 +145,7 @@ EOT
 
 EOT
         , $node->root()->dump());
+        $this->assertEquals('barbar', $node->name());
     }
 
     public function testPrependsNodeAsFirstChild()
@@ -154,6 +158,7 @@ EOT
 
 EOT
         , $node->root()->dump());
+        $this->assertEquals('barbar', $node->name());
     }
 
     public function testPrependsNodeAsFirstChildWhenThereIsNoFirstChild()
@@ -166,6 +171,7 @@ EOT
 
 EOT
         , $node->root()->dump());
+        $this->assertEquals('barbar', $node->name());
     }
 
     public function testClearsAllChildrenNodes()

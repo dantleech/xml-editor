@@ -156,9 +156,9 @@ class Node implements NodeLike
         $newNode = $this->importUnknown($node);
 
         $parent = $this->node->parentNode;
-        $parent->insertBefore($newNode, $this->node);
+        $node = $parent->insertBefore($newNode, $this->node);
 
-        return $this;
+        return new self($node);
     }
 
     /**
@@ -170,9 +170,9 @@ class Node implements NodeLike
         $newNode = $this->importUnknown($node);
 
         $parent = $this->node->parentNode;
-        $parent->insertBefore($newNode, $this->node->nextSibling);
+        $node = $parent->insertBefore($newNode, $this->node->nextSibling);
 
-        return $this;
+        return new self($node);
     }
 
     /**
@@ -182,9 +182,9 @@ class Node implements NodeLike
     public function append($node): NodeLike
     {
         $newNode = $this->importUnknown($node);
-        $this->node->appendChild($newNode);
+        $node = $this->node->appendChild($newNode);
 
-        return new self($newNode);
+        return new self($node);
     }
 
     /**
@@ -194,9 +194,9 @@ class Node implements NodeLike
     public function prepend($node): NodeLike
     {
         $newNode = $this->importUnknown($node);
-        $this->node->insertBefore($newNode, $this->node->firstChild);
+        $node = $this->node->insertBefore($newNode, $this->node->firstChild);
 
-        return $this;
+        return new self($node);
     }
 
     /**
