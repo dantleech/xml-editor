@@ -193,6 +193,33 @@ EOT
         , $nodeList->dump());
     }
 
+    public function testPrettyPrint()
+    {
+        $nodeList = $this->createList('<one><bar/></one>');
+        $this->assertEquals(<<<'EOT'
+<?xml version="1.0"?>
+<one>
+  <bar/>
+</one>
+
+EOT
+        , $nodeList->dump(true));
+    }
+
+    public function testRemoveNodes()
+    {
+        $nodeList = $this->createList('<one><bar/></one>');
+        $first = $nodeList->first();;
+        $nodeList->remove();
+        $this->assertEquals(<<<'EOT'
+<?xml version="1.0"?>
+<list/>
+
+EOT
+        , $first->root()->dump());
+    }
+
+
 
     private function createList(string $string): NodeList
     {

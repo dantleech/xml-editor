@@ -231,13 +231,20 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
         return new self($children);
     }
 
-    public function dump(): string
+    public function dump(bool $pretty = false): string
     {
         $document = new \DOMDocument('1.0');
+
+        if ($pretty) {
+            $document->formatOutput = true;
+            $document->preserveWhiteSpace = true;
+        }
+
         foreach ($this->nodes as $node) {
             $node = $node->attachTo($document);
             $document->appendChild($node);
         }
+
         return $document->saveXML();
     }
 
