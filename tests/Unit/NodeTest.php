@@ -238,6 +238,13 @@ EOT
         $this->assertEquals('bar', $attributes->get('foobar'));
     }
 
+    public function testSetsAttributes()
+    {
+        $node = Node::fromXmlFirstChild('<foobar/>');
+        $node->attributes()->set('bar', 'foobar');
+        $this->assertEquals('foobar', $node->attributes()->get('bar'));
+    }
+
     public function testThrowsExceptionWhenGettingAttributesOnInvalidNode()
     {
         $this->expectException(InvalidNodeType::class);

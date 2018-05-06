@@ -55,7 +55,7 @@ class NodeListTest extends TestCase
     /**
      * @dataProvider provideFiltersNodesMatchingExpression
      */
-    public function testFiltersNodesMatchingExpression(string $expression, int $expectedCount)
+    public function testFiltersNodesMatchingExpression($expression, int $expectedCount)
     {
         $nodeList = $this->createList('<foobar foo="bar"/><barfoo bar="baz"/><foobar foo="bar"/><foobar foo="baz"/>');
         $nodeList = $nodeList->filter($expression);
@@ -76,6 +76,13 @@ class NodeListTest extends TestCase
 
         yield 'relative attribute only' => [
             'name()="foobar" and @foo="bar"',
+            2
+        ];
+
+        yield 'closure filter' => [
+            function (Node $node) {
+                return $node->attributes()->get('foo') == 'bar';
+            },
             2
         ];
     }

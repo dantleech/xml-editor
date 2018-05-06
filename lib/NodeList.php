@@ -68,12 +68,18 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
     }
 
     /**
-     * @param string $expression
+     * @param string|Callable $expressionOrCallable
      */
-    public function filter(string $expression): NodeList
+    public function filter($expressionOrCallable): NodeList
     {
-        return new self(array_filter($this->nodes, function (Node $node) use ($expression) {
-            return $node->evaluate($expression);
+        if (is_callable($expressionOrCallable)) {
+            return new self(array_filter($this->nodes, $expressionOrCallable));
+        }
+
+        assert(is_string($expressionOrCallable));
+
+        return new self(array_filter($this->nodes, function (Node $node) use ($expressionOrCallable) {
+            return $node->evaluate($expressionOrCallable);
 
         }));
     }
