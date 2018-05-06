@@ -135,6 +135,13 @@ EOT
         $this->assertCount(2, $nodeList);
     }
 
+    public function testFindsUsingParameterizedQuery()
+    {
+        $nodeList = $this->createList('<one><potato one="one"/></one><two><potato/></two><three><cabbage/></three>');
+        $nodeList = $nodeList->find('.//potato[@one=?]', 'one');
+        $this->assertCount(1, $nodeList);
+    }
+
     public function testReturnsTextContentOfAllNodes()
     {
         $nodeList = $this->createList('<one>foobar</one><two>barfoo</two>');

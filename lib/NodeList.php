@@ -131,11 +131,11 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
         return $this;
     }
 
-    public function find(string $xpathQuery): NodeList
+    public function find(string $xpathQuery, ...$params): NodeList
     {
         $nodes = [];
         foreach ($this->nodes as $node) {
-            foreach ($node->find($xpathQuery) as $newNode) {
+            foreach ($node->find($xpathQuery, ...$params) as $newNode) {
                 assert($newNode instanceof Node);
                 $nodes[] = $newNode;
             }

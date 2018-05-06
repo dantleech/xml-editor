@@ -10,6 +10,7 @@ use DOMXPath;
 use Phpactor\XmlQuery\Exception\InvalidNodeType;
 use Phpactor\XmlQuery\Exception\NodeHasNoParent;
 use Phpactor\XmlQuery\Exception\CannotReplaceRoot;
+use Phpactor\XmlQuery\Helper\XPathHelper;
 use RuntimeException;
 use Phpactor\XmlQuery\Node;
 
@@ -65,10 +66,10 @@ class Node implements NodeLike
         ));
     }
 
-    public function find(string $xpathQuery): NodeList
+    public function find(string $xpathQuery, ...$params): NodeList
     {
         $xpath = $this->xpath();
-
+        $xpathQuery = XPathHelper::parameterizeQuery($xpathQuery, $params);
         return NodeList::fromDOMNodeList($xpath->query($xpathQuery, $this->node));
     }
 

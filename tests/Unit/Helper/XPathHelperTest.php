@@ -3,6 +3,7 @@
 namespace Phpactor\XmlQuery\Tests\Unit\Helper;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\XmlQuery\Exception\InvalidQueryValue;
 use Phpactor\XmlQuery\Exception\MissingQueryParameter;
 use Phpactor\XmlQuery\Helper\XPathHelper;
 
@@ -56,10 +57,17 @@ class XPathHelperTest extends TestCase
         ];
     }
 
-    public function testThrowsExceptionIfParameterIsMissin()
+    public function testThrowsExceptionIfParameterIsMissing()
     {
         $this->expectException(MissingQueryParameter::class);
         XPathHelper::parameterizeQuery('hello=?', []);
     }
+
+    public function testThrowsExceptionIfValueNotSupported()
+    {
+        $this->expectException(InvalidQueryValue::class);
+        XPathHelper::parameterizeQuery('hello=?', [ new \stdClass() ]);
+    }
+
 
 }

@@ -2,12 +2,12 @@
 
 namespace Phpactor\XmlQuery\Helper;
 
+use Phpactor\XmlQuery\Exception\InvalidQueryValue;
 use Phpactor\XmlQuery\Exception\MissingQueryParameter;
-use function strlen;
 
 class XPathHelper
 {
-    public function parameterizeQuery(string $query, array $params = array (
+    public static function parameterizeQuery(string $query, array $params = array (
 )): string
     {
         $chars = [];
