@@ -26,6 +26,9 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
         $this->nodes = $nodes;
     }
 
+    /**
+     * @return NodeList<Node>
+     */
     public static function fromDOMNodeList(DOMNodeList $nodeList): NodeList
     {
         return new self(array_map(function (DOMNode $node) {
@@ -69,6 +72,7 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
 
     /**
      * @param string|Callable $expressionOrCallable
+     * @return NodeList<Node>
      */
     public function filter($expressionOrCallable): NodeList
     {
@@ -85,7 +89,7 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
     }
 
     /**
-     * @return NodeList
+     * @return NodeList<Node>
      */
     public function after($node): NodeLike
     {
@@ -96,7 +100,7 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
     }
 
     /**
-     * @return NodeList
+     * @return NodeList<Node>
      */
     public function before($node): NodeLike
     {
@@ -107,7 +111,7 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
     }
 
     /**
-     * @return NodeList
+     * @return NodeList<Node>
      */
     public function append($node): NodeLike
     {
@@ -118,7 +122,7 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
     }
 
     /**
-     * @return NodeList
+     * @return NodeList<Node>
      */
     public function prepend($node): NodeLike
     {
@@ -128,6 +132,9 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
         });
     }
 
+    /**
+     * @return NodeList<Node>
+     */
     public function apply(callable $callable): NodeList
     {
         foreach ($this->nodes as $node) {
@@ -137,6 +144,9 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
         return $this;
     }
 
+    /**
+     * @return NodeList<Node>
+     */
     public function find(string $xpathQuery, ...$params): NodeList
     {
         $nodes = [];
@@ -151,7 +161,7 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
     }
 
     /**
-     * @return NodeList
+     * @return NodeList<Node>
      */
     public function replace($newNode): NodeLike
     {
@@ -175,6 +185,9 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
 
     public function remove(): void
     {
+        foreach ($this->nodes as $node) {
+            $node->remove();
+        }
     }
 
     /**
@@ -191,6 +204,9 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
         return implode('', $value);
     }
 
+    /**
+     * @return NodeList<Node>
+     */
     public function clear(): NodeLike
     {
         $this->apply(function (Node $node) {
@@ -200,6 +216,9 @@ final class NodeList implements NodeLike, Countable, IteratorAggregate
         return $this;
     }
 
+    /**
+     * @return NodeList<Node>
+     */
     public function children(): NodeList
     {
         $children = [];
