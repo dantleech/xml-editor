@@ -12,7 +12,7 @@ class TolerantSourceLoaderTest extends TestCase
     public function testConvertsSourceToXml()
     {
         $source = file_get_contents(__DIR__ . '/data/example.php');
-        $loader = new TolerantSourceLoader(new Parser());
+        $loader = new TolerantSourceLoader();
         $xml = $loader->loadSource($source);
         $this->assertEquals($source, $xml->text());
     }

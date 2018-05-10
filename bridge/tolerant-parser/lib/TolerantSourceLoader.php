@@ -22,9 +22,15 @@ class TolerantSourceLoader implements SourceLoader
      */
     private $parser;
 
-    public function __construct(Parser $parser = null)
+    /**
+     * @var TolerantNodeEnhancer[]
+     */
+    private $nodeEnhancers;
+
+    public function __construct(array $nodeEnhancers = [], Parser $parser = null)
     {
         $this->parser = $parser ?: new Parser();
+        $this->nodeEnhancers = $nodeEnhancers;
     }
 
     public function loadSource(string $source): QueryNode
@@ -83,30 +89,8 @@ class TolerantSourceLoader implements SourceLoader
         $newElement = $element->ownerDocument->createElement($node->getNodeKindName());
         $element->appendChild($newElement);
 
-        // TODO: This violates the O in SOLID - extract
-        if ($node instanceof NamespacedNameInterface) {
-            $newElement->setAttribute('namespaced-name', (string) $node->getNamespacedName());
-        }
-
-        if ($node instanceof QualifiedName) {
-            $qualification = [];
-            if ($node->isFullyQualifiedName()) {
-                $qualification[] = 'full';
-            }
-
-            if ($node->isQualifiedName()) {
-                $qualification[] = 'qualified';
-            }
-
-            if ($node->isRelativeName()) {
-                $qualification[] = 'relative';
-            }
-
-            if ($node->isUnqualifiedName()) {
-                $qualification[] = 'unqualified';
-            }
-
-            $newElement->setAttribute('qualification', implode(',', $qualification));
+        foreach ($this->nodeEnhancers as $nodeEnhancer) {
+            $nodeEnhancer->enhance($node, $newElement);
         }
 
         foreach ($node->getChildNames() as $childName) {

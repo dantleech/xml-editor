@@ -11,23 +11,25 @@
     ],
     "require": {
         "phpunit/phpunit": "^7.2@dev",
-        "microsoft/tolerant-php-parser": "dev-master",
         "phpactor/test-utils": "^1.0@dev",
         "phpstan/phpstan-shim": "^0.9.0@dev"
     },
     "require-dev": {
-        "infection/infection": "dev-master"
+        "infection/infection": "dev-master",
+        "microsoft/tolerant-php-parser": "dev-master"
     },
     "autoload": {
         "psr-4": {
             "Phpactor\\XmlQuery\\": "lib/",
-            "Phpactor\\XmlQuery\\Bridge\\TolerantParser\\": "bridge/tolerant-parser/lib/"
+            "Phpactor\\XmlQuery\\Bridge\\TolerantParser\\": "bridge/tolerant-parser/lib/",
+            "Phpactor\\XmlQuery\\Bridge\\WorseReflection\\": "bridge/worse-reflection/lib/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "Phpactor\\XmlQuery\\Tests\\": "tests/",
-            "Phpactor\\XmlQuery\\Bridge\\TolerantParser\\Tests\\": "bridge/tolerant-parser/tests/"
+            "Phpactor\\XmlQuery\\Bridge\\TolerantParser\\Tests\\": "bridge/tolerant-parser/tests/",
+            "Phpactor\\XmlQuery\\Bridge\\WorseReflection\\Tests\\": "bridge/worse-reflection/tests/"
         }
     },
     "extra": {
