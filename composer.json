@@ -20,12 +20,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Phpactor\\XmlQuery\\": "lib/"
+            "Phpactor\\XmlQuery\\": "lib/",
+            "Phpactor\\XmlQuery\\Bridge\\TolerantParser\\": "bridge/tolerant-parser/lib/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Phpactor\\XmlQuery\\Tests\\": "tests/"
+            "Phpactor\\XmlQuery\\Tests\\": "tests/",
+            "Phpactor\\XmlQuery\\Bridge\\TolerantParser\\Tests\\": "bridge/tolerant-parser/tests/"
         }
     },
     "extra": {

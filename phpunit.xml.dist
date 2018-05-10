@@ -9,6 +9,7 @@
     <testsuites>
         <testsuite name="XML Query">
             <directory>./tests</directory>
+            <directory>./bridge/tolerant-parser/tests</directory>
         </testsuite>
     </testsuites>
 
