@@ -9,14 +9,13 @@
             "email": "daniel@dantleech.com"
         }
     ],
-    "require": {
-        "phpunit/phpunit": "^7.2@dev",
-        "phpactor/test-utils": "^1.0@dev",
-        "phpstan/phpstan-shim": "^0.9.0@dev"
-    },
     "require-dev": {
+        "phpactor/test-utils": "^1.0@dev",
+        "phpunit/phpunit": "^7.2@dev",
+        "phpstan/phpstan-shim": "^0.9.0@dev",
         "infection/infection": "dev-master",
-        "microsoft/tolerant-php-parser": "dev-master"
+        "microsoft/tolerant-php-parser": "dev-master",
+        "phpactor/worse-reflection": "^1.0@dev"
     },
     "autoload": {
         "psr-4": {
