@@ -66,6 +66,9 @@ class Node implements NodeLike
         ));
     }
 
+    /**
+     * @return NodeList<Node>
+     */
     public function find(string $xpathQuery, ...$params): NodeList
     {
         $xpath = $this->xpath();
@@ -262,6 +265,11 @@ class Node implements NodeLike
         }
 
         return $this->node->ownerDocument;
+    }
+
+    public function createText(string $text)
+    {
+        return $this->documentNode()->createTextNode($text);
     }
 
     public function attributes(): Attributes
